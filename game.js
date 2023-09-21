@@ -51,7 +51,7 @@ function playRound ( playerSelection , computerSelection ){
 
     if (computerSelection === "paper" && playerSelection === "scissor"){
       
-        return "You Win! Scissor beats Paper";
+        return "You win! Scissor beats Paper";
         
     }
     if (computerSelection === "paper" && playerSelection === "rock"){
