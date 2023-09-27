@@ -1,3 +1,16 @@
+//Make all the variables needed and DOM method.
+const possibleChoices = document.querySelectorAll('button');
+const resultDisplay = document.querySelector('#result');
+const computerScoreDisplay = document.querySelector('#computer-score');
+const playerScoreDisplay = document.querySelector('#player-score');
+let computerScore = 0;
+let playerScore = 0;
+let result = "";
+let playerSelection;
+let computerSelection;
+let round;
+
+//Make Function to get computer choice.
 function getComputerChoice(){
     let randomChoice;
     randomChoice = Math.floor(Math.random()*3+1);
@@ -17,7 +30,7 @@ function getComputerChoice(){
 
     return computerChoice;
 }
-
+//Make Function to play a single move against computer.
 function playRound ( playerSelection , computerSelection ){
 
     if (computerSelection === playerSelection){
@@ -61,24 +74,18 @@ function playRound ( playerSelection , computerSelection ){
     }
 }
 
-
+//Final function  to play a round with computer when a button is clicked.
 function game(){
-
-    let computerScore = 0;
-    let playerScore = 0;
-    let result = "";
-        
-
-    for(let i =1 ; i <=5 ; i++) {
-
-        let playerSelection = prompt("Enter your choice form these rock / paper / scissor :").toLowerCase();
-
-        let computerSelection =  getComputerChoice();
-
-        let round= playRound(playerSelection , computerSelection);
-
+   
+        possibleChoices.forEach(button => button.addEventListener('click' , (e) => {
+        if(computerScore < 5 && playerScore < 5){
+        playerSelection = e.target.id
+        computerSelection =  getComputerChoice();
+        round = playRound(playerSelection , computerSelection);
+        resultDisplay.innerText = round;
         if( round == "You win! Paper beats Rock" ||    round == "You win! Scissor beats Paper" || round == "You win! Rock beats Scissor" ){
          playerScore += 1
+         playerScoreDisplay.innerText = playerScore;
         }
         else if( round == "It's a draw"){
         playerScore +=0;
@@ -87,21 +94,22 @@ function game(){
     
         else{
         computerScore += 1;
-        }  
-
-        console.log(round);
+        computerScoreDisplay.innerText = computerScore ;
+        } 
+        
+        if(computerScore==5){
+            result = "Computer won! Need to work on your skills"
+            resultDisplay.innerText = result;
+            
+        }
+        if (playerScore == 5){
+            result = "You Won! Victory is yours"
+            resultDisplay.innerText = result;
+        }
     }
-
-      if(playerScore > computerScore){
-        result = "You Win by " + playerScore + " / " + computerScore;
-        console.log(result);
-      }
+        
+      }));
       
-      if(playerScore < computerScore){
-        result = "You Lose by " + playerScore + " / " + computerScore;
-        console.log(result);
-      }
-
 }
 
     game();
